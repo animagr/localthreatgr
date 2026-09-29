@@ -10,6 +10,7 @@ import { ThemeCycler } from "~/components/ThemeCycler";
 import { Tooltip } from "~/components/Tooltip";
 import { copy } from "~/lib/clipboard";
 import { useTooltip } from "~/lib/tooltip";
+import { currentReportText } from "~/standalone/api"; // FORK(gr)
 
 export function App() {
   const [hasReportId] = useRoute("/:reportId");
@@ -17,7 +18,12 @@ export function App() {
   const tooltip = useTooltip();
 
   const onShare = useCallback(() => {
-    copy(location.href);
+    // FORK(gr): standalone links point at a local file; copy pilot names.
+    copy(
+      import.meta.env.MODE === "standalone"
+        ? currentReportText()
+        : location.href,
+    );
     tooltip.open();
     setTimeout(() => tooltip.close(), 3000);
   }, [tooltip]);

@@ -2,3 +2,6 @@
 compose.override.yml
 .idea
 .DS_Store
+
+# FORK(gr): standalone single-file build output (see FORK.md)
+dist-standalone
